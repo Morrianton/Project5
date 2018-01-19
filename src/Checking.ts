@@ -15,6 +15,7 @@ export class CheckingAccount implements Account {
     accountType: AccountType;
     interestRate: number;
     date: Date;
+    startDate: Date;
     dateOpened: Date;
     transaction: Transaction;
 
@@ -26,32 +27,34 @@ export class CheckingAccount implements Account {
         this.accountType = 1;
         this.interestRate = 0.01;
         this.date = new Date();
+        this.startDate = new Date();
         this.dateOpened = new Date();
-        this.transaction = new Transaction;
     }
 
     withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction {
         let message;
-        if(amount !> this.balance){
-            message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
-            this.balance -= amount;
-            console.log(message);
-            this.transaction.success = true;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = "";
-        }
-        else {
-            message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
-            console.log(message);
-            this.transaction.success = false;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = message;
+        if(transactionOrigin == TransactionOrigin.branch || TransactionOrigin.web || TransactionOrigin.phone) {
+            if(amount !> this.balance){
+                message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
+                this.balance -= amount;
+                console.log(message);
+                this.transaction.success = true;
+                this.transaction.amount = amount;
+                this.transaction.resultBalance = this.balance;
+                this.transaction.transactionDate = this.date;
+                this.transaction.description = description;
+                this.transaction.errorMessage = "";
+            }
+            else {
+                message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
+                console.log(message);
+                this.transaction.success = false;
+                this.transaction.amount = amount;
+                this.transaction.resultBalance = this.balance;
+                this.transaction.transactionDate = this.date;
+                this.transaction.description = description;
+                this.transaction.errorMessage = message;
+            }
         }
         this.accountHistory.push(this.transaction);
         return this.transaction;
@@ -86,20 +89,35 @@ export class CheckingAccount implements Account {
 
     advanceDate(numberOfDays: number): void {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
+        this.accrueInterest();
+        this.startDate = new Date(this.date);
     }
 
     calcInterest(): number {
-        return Math.round(100 * (this.interestRate * this.balance / 12)) / 100;
+        return (this.interestRate / 12) * this.balance;
     }
 
     accrueInterest(): void {
+        let yearsDifference;
+        let monthsDifference;
+        let totalMonths;
         if(this.date > this.dateOpened){
-            let difference = (((((this.dateOpened.getMilliseconds() - this.date.getMilliseconds()) / 1000) / 60) / 60) / 24);
-            this.balance += (this.calcInterest() * difference) / 30;
+            yearsDifference = this.date.getFullYear() - this.dateOpened.getFullYear();
+
+            if(this.date.getMonth() < this.dateOpened.getMonth()) {
+                monthsDifference = (this.date.getMonth() - this.dateOpened.getMonth()) * -1;
+            }
+            else {
+                monthsDifference = this.date.getMonth() - this.dateOpened.getMonth();
+            }
+
+            totalMonths = (yearsDifference * 12) + monthsDifference;
+
+            for(let i = 0; i < totalMonths; i++) {
+                this.balance += this.calcInterest();
+            }
+
+            this.balance = Math.round(100 * this.balance) / 100;
         }
     };
-
-    showBalance(): void {
-        console.log(`Your balance in this account is $${this.balance}.`);
-    }
 }
