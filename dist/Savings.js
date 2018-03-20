@@ -11,6 +11,7 @@ var SavingsAccount = /** @class */ (function () {
         this.interestRate = 0.02;
         this.date = new Date();
         this.startDate = new Date();
+        this.dateOpened = new Date();
     }
     SavingsAccount.prototype.withdrawMoney = function (amount, description, transactionOrigin) {
         var message;

@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var TransactionOrigin_1 = require("./TransactionOrigin");
 var Decorators_1 = require("./Decorators");
 var CheckingAccount = /** @class */ (function () {
     function CheckingAccount(accountHolder, birthDate) {
@@ -24,37 +23,37 @@ var CheckingAccount = /** @class */ (function () {
     }
     CheckingAccount.prototype.withdrawMoney = function (amount, description, transactionOrigin) {
         var message;
-        if (transactionOrigin == TransactionOrigin_1.TransactionOrigin.branch || TransactionOrigin_1.TransactionOrigin.web || TransactionOrigin_1.TransactionOrigin.phone) {
-            if (amount <= this.balance) {
-                message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
-                this.balance -= amount;
-                console.log(message);
-                this.transaction = {
-                    success: true,
-                    amount: amount,
-                    resultBalance: this.balance,
-                    transactionDate: this.date,
-                    description: description,
-                    errorMessage: ""
-                };
-            }
-            else {
-                message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
-                console.log(message);
-                this.transaction = {
-                    success: false,
-                    amount: amount,
-                    resultBalance: this.balance,
-                    transactionDate: this.date,
-                    description: description,
-                    errorMessage: message
-                };
-            }
+        if (amount <= this.balance) {
+            this.balance -= amount;
+            message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
+            console.log(message);
+            this.transaction = {
+                success: true,
+                amount: amount,
+                origin: transactionOrigin,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: ""
+            };
+        }
+        else {
+            message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
+            console.log(message);
+            this.transaction = {
+                success: false,
+                amount: amount,
+                origin: transactionOrigin,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: message
+            };
         }
         this.accountHistory.push(this.transaction);
         return this.transaction;
     };
-    CheckingAccount.prototype.depositMoney = function (amount, description) {
+    CheckingAccount.prototype.depositMoney = function (amount, description, transactionOrigin) {
         var message;
         this.balance += amount;
         if (amount > 0) {
@@ -62,6 +61,7 @@ var CheckingAccount = /** @class */ (function () {
             console.log(message);
             this.transaction.success = true;
             this.transaction.amount = amount;
+            this.transaction.origin = transactionOrigin;
             this.transaction.resultBalance = this.balance;
             this.transaction.transactionDate = this.date;
             this.transaction.description = description;
@@ -72,6 +72,7 @@ var CheckingAccount = /** @class */ (function () {
             console.log(message);
             this.transaction.success = false;
             this.transaction.amount = amount;
+            this.transaction.origin = transactionOrigin;
             this.transaction.resultBalance = this.balance;
             this.transaction.transactionDate = this.date;
             this.transaction.description = description;
