@@ -1,11 +1,9 @@
-// TypeScript 2.6
-
-export function displayClassName(target: Function) {
+export function displayClassName(target: any) {
     console.log(`Class Name: ${target.name}`)
 }
 
 export function displayClassNameWithPurpose(purpose: string) {
-    return (target: Function) => {
+    return (target: any) => {
         console.log(`Class Name: ${target.name}\nPurpose: ${purpose}`);
 
     }

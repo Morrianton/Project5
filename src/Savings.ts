@@ -13,8 +13,10 @@ export class SavingsAccount implements Account {
     accountType: AccountType;
     interestRate: number;
     date: Date;
+    startDate: Date;
     dateOpened: Date;
     transaction: Transaction;
+    withdrawlLimit: number;
 
     constructor(accountHolderName, accountHolderBirthDate){
         this.accountHolderName = accountHolderName;
@@ -24,12 +26,20 @@ export class SavingsAccount implements Account {
         this.accountType = 2;
         this.interestRate = 0.02;
         this.date = new Date();
+        this.startDate = new Date();
         this.dateOpened = new Date();
-        this.transaction = new Transaction;
-
+        this.withdrawlLimit = 6;
     }
 
     withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction {
+// checks withdrawlLimit and transactionOrigin
+if(transactionOrigin != TransactionOrigin.branch && this.withdrawlLimit > 0) {
+    // compares the date of last Transaction to current date
+    let prevTransAct = this.accountHistory.filter()
+        // date comparison >= 30 days
+            // allow transaction
+            // reduce withdrawlLimit
+}
         let message;
         if(amount !> this.balance){
             message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
@@ -56,7 +66,7 @@ export class SavingsAccount implements Account {
         return this.transaction;
     }
 
-    depositMoney(amount: number, description: string): Transaction {
+    depositMoney(amount: number, description: string, transactionOrigin?: TransactionOrigin): Transaction {
         let message;
         this.balance += amount;
         if(amount > 0) {
@@ -86,8 +96,8 @@ export class SavingsAccount implements Account {
     }
 
     accrueInterest(): void {
-        if(this.date > this.dateOpened){
-            let difference = (((((this.dateOpened.getMilliseconds() - this.date.getMilliseconds()) / 1000) / 60) / 60) / 24);
+        if(this.date > this.startDate){
+            let difference = (((((this.startDate.getMilliseconds() - this.date.getMilliseconds()) / 1000) / 60) / 60) / 24);
             this.balance += (this.calcInterest() * difference) / 30;
         }
     };
@@ -100,5 +110,8 @@ export class SavingsAccount implements Account {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
     }
 
+    findTransType(element, index, array) {
+        return element === ''
+    }
 
 }

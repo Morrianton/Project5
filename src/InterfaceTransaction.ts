@@ -1,6 +1,11 @@
 // TypeScript 2.6
 
+import {TransactionType} from "./TransactionType";
+import {TransactionOrigin} from "./TransactionOrigin";
+
 export interface Transaction {
+    transactionType?: TransactionType;
+    origin?: TransactionOrigin;
     success: boolean;
     // resultBalance will be unchanged from the previous balance when success is false.
     amount: number;

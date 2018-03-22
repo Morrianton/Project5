@@ -27,7 +27,6 @@ export class RetirementAccount extends SavingsAccount implements Account {
         this.interestRate = 0.03;
         this.date = new Date();
         this.dateOpened = new Date();
-        this.transaction = new Transaction;
 
     }
 
