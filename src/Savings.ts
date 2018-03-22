@@ -95,16 +95,38 @@ if(transactionOrigin != TransactionOrigin.branch && this.withdrawlLimit > 0) {
         return Math.round(100 * (this.interestRate * this.balance / 12)) / 100;
     }
 
-    accrueInterest(): void {
-        if(this.date > this.startDate){
-            let difference = (((((this.startDate.getMilliseconds() - this.date.getMilliseconds()) / 1000) / 60) / 60) / 24);
-            this.balance += (this.calcInterest() * difference) / 30;
-        }
-    };
+    // accrueInterest(): void {
+    //     if(this.date > this.startDate){
+    //         let difference = (((((this.startDate.getMilliseconds() - this.date.getMilliseconds()) / 1000) / 60) / 60) / 24);
+    //         this.balance += (this.calcInterest() * difference) / 30;
+    //     }
+    // };
 
     showBalance(): void {
         console.log(`Your balance in this account is $${this.balance}.`);
-    }
+    }accrueInterest(): void {
+        let yearsDifference;
+        let monthsDifference;
+        let totalMonths;
+        if(this.date > this.dateOpened){
+            yearsDifference = this.date.getFullYear() - this.dateOpened.getFullYear();
+
+            if(this.date.getMonth() < this.dateOpened.getMonth()) {
+                monthsDifference = (this.date.getMonth() - this.dateOpened.getMonth()) * -1;
+            }
+            else {
+                monthsDifference = this.date.getMonth() - this.dateOpened.getMonth();
+            }
+
+            totalMonths = (yearsDifference * 12) + monthsDifference;
+
+            for(let i = 0; i < totalMonths; i++) {
+                this.balance += this.calcInterest();
+            }
+
+            this.balance = Math.round(100 * this.balance) / 100;
+        }
+    };
 
     advanceDate(numberOfDays: number): void {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));

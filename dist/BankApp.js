@@ -18,7 +18,7 @@ console.log(myChecking.balance);
 console.log(myChecking.accountHistory);
 var Savings_1 = require("./Savings");
 var mySavings = new Savings_1.SavingsAccount("Bryson L. Smith", 10 / 19 / 1985);
-console.log(mySavings.balance + '\n'
+console.log('$' + mySavings.balance + '\n'
     + mySavings.date + '\n'
     + mySavings.startDate + '\n'
     + mySavings.dateOpened);

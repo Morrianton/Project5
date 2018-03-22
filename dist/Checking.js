@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var TransactionType_1 = require("./TransactionType");
 var Decorators_1 = require("./Decorators");
 var CheckingAccount = /** @class */ (function () {
     function CheckingAccount(accountHolder, birthDate) {
@@ -30,7 +31,6 @@ var CheckingAccount = /** @class */ (function () {
             this.transaction = {
                 success: true,
                 amount: amount,
-                origin: transactionOrigin,
                 resultBalance: this.balance,
                 transactionDate: this.date,
                 description: description,
@@ -41,9 +41,10 @@ var CheckingAccount = /** @class */ (function () {
             message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
             console.log(message);
             this.transaction = {
+                transactionType: TransactionType_1.TransactionType.withdrawal,
+                origin: transactionOrigin,
                 success: false,
                 amount: amount,
-                origin: transactionOrigin,
                 resultBalance: this.balance,
                 transactionDate: this.date,
                 description: description,
@@ -59,9 +60,10 @@ var CheckingAccount = /** @class */ (function () {
         if (amount > 0) {
             message = "$" + amount + " has been added to your account. Your new balance is $" + this.balance + ".";
             console.log(message);
+            this.transaction.transactionType = TransactionType_1.TransactionType.deposit;
+            this.transaction.origin = transactionOrigin;
             this.transaction.success = true;
             this.transaction.amount = amount;
-            this.transaction.origin = transactionOrigin;
             this.transaction.resultBalance = this.balance;
             this.transaction.transactionDate = this.date;
             this.transaction.description = description;
@@ -70,9 +72,10 @@ var CheckingAccount = /** @class */ (function () {
         else {
             message = "An invalid amount has been entered.";
             console.log(message);
+            this.transaction.transactionType = TransactionType_1.TransactionType.deposit;
+            this.transaction.origin = transactionOrigin;
             this.transaction.success = false;
             this.transaction.amount = amount;
-            this.transaction.origin = transactionOrigin;
             this.transaction.resultBalance = this.balance;
             this.transaction.transactionDate = this.date;
             this.transaction.description = description;
