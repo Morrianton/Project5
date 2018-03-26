@@ -177,7 +177,7 @@ export class SavingsAccount implements Account {
     }
 
     findDateLastTransaction(acctHist: Transaction[]): Date {
-        let transactions = acctHist.filter(type => type. transactionType === 1 && type.success === 'true');
+        let transactions = acctHist.filter(type => type. transactionType === 1 && type.success === true);
 
         let lastTransaction = transactions.pop();
 
