@@ -109,6 +109,8 @@ var SavingsAccount = /** @class */ (function () {
     ;
     SavingsAccount.prototype.advanceDate = function (numberOfDays) {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
+        this.accrueInterest();
+        this.startDate = new Date(this.date.toString());
     };
     SavingsAccount.prototype.findTransType = function (element, index, array) {
         return element === '';

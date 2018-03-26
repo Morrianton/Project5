@@ -4,6 +4,7 @@ import {Account} from "./Account";
 import {AccountType} from "./AccountType";
 import {Transaction} from "./InterfaceTransaction";
 import {TransactionOrigin} from "./TransactionOrigin";
+import {TransactionType} from "./TransactionType";
 
 export class SavingsAccount implements Account {
     accountHolderName: string;
@@ -32,38 +33,83 @@ export class SavingsAccount implements Account {
     }
 
     withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction {
-// checks withdrawlLimit and transactionOrigin
-if(transactionOrigin != TransactionOrigin.branch && this.withdrawlLimit > 0) {
-    // compares the date of last Transaction to current date
-    let prevTransAct = this.accountHistory.filter()
-        // date comparison >= 30 days
-            // allow transaction
-            // reduce withdrawlLimit
-}
-        let message;
-        if(amount !> this.balance){
-            message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
-            this.balance -= amount;
-            console.log(message);
-            this.transaction.success = true;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = "";
+
+// checks transactionOrigin
+        if (transactionOrigin != TransactionOrigin.branch) {
+
+            // compares the date of last Transaction to current date
+            // date comparison >= 1 month
+            if (this.findDateLastTransaction(this.accountHistory).getMonth() / this.date.getMonth() < 1) {
+
+                if (this.withdrawlLimit !> 6) {
+                    let message: string;
+                    if (amount ! > this.balance) {
+                         message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
+                        this.balance -= amount;
+                        console.log(message);
+                        this.transaction.success = true;
+                        this.transaction.amount = amount;
+                        this.transaction.resultBalance = this.balance;
+                        this.transaction.transactionDate = this.date;
+                        this.transaction.description = description;
+                        this.transaction.errorMessage = "";
+                        this.withdrawlLimit++;
+                    }
+                    else {
+                        message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
+                        console.log(message);
+                        this.transaction.success = false;
+                        this.transaction.amount = amount;
+                        this.transaction.resultBalance = this.balance;
+                        this.transaction.transactionDate = this.date;
+                        this.transaction.description = description;
+                        this.transaction.errorMessage = message;
+                    }
+                }
+
+                else {
+                    let message:string = 'We apologize, but you are limited to 6 phone or web withdrawals per month per Federal regulation.';
+                    console.log(message);
+                    this.transaction.success = false;
+                    this.transaction.amount = amount;
+                    this.transaction.resultBalance = this.balance;
+                    this.transaction.transactionDate = this.date;
+                    this.transaction.description = description;
+                    this.transaction.errorMessage = message;
+                }
+                    this.accountHistory.push(this.transaction);
+                    return this.transaction;
+            }
+
+            else {
+                this.withdrawlLimit = 0;
+                let message: string;
+                if (amount ! > this.balance) {
+                    message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
+                    this.balance -= amount;
+                    console.log(message);
+                    this.transaction.success = true;
+                    this.transaction.amount = amount;
+                    this.transaction.resultBalance = this.balance;
+                    this.transaction.transactionDate = this.date;
+                    this.transaction.description = description;
+                    this.transaction.errorMessage = "";
+                    this.withdrawlLimit++;
+                }
+
+                else {
+                    message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
+                    console.log(message);
+                    this.transaction.success = false;
+                    this.transaction.amount = amount;
+                    this.transaction.resultBalance = this.balance;
+                    this.transaction.transactionDate = this.date;
+                    this.transaction.description = description;
+                    this.transaction.errorMessage = message;
+                }
+
+            }
         }
-        else {
-            message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
-            console.log(message);
-            this.transaction.success = false;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = message;
-        }
-        this.accountHistory.push(this.transaction);
-        return this.transaction;
     }
 
     depositMoney(amount: number, description: string, transactionOrigin?: TransactionOrigin): Transaction {
@@ -91,20 +137,16 @@ if(transactionOrigin != TransactionOrigin.branch && this.withdrawlLimit > 0) {
         }
         this.accountHistory.push(this.transaction);
         return this.transaction;
+
     }calcInterest(): number {
         return Math.round(100 * (this.interestRate * this.balance / 12)) / 100;
     }
 
-    // accrueInterest(): void {
-    //     if(this.date > this.startDate){
-    //         let difference = (((((this.startDate.getMilliseconds() - this.date.getMilliseconds()) / 1000) / 60) / 60) / 24);
-    //         this.balance += (this.calcInterest() * difference) / 30;
-    //     }
-    // };
-
     showBalance(): void {
         console.log(`Your balance in this account is $${this.balance}.`);
-    }accrueInterest(): void {
+    }
+
+    accrueInterest(): void {
         let yearsDifference;
         let monthsDifference;
         let totalMonths;
@@ -130,10 +172,16 @@ if(transactionOrigin != TransactionOrigin.branch && this.withdrawlLimit > 0) {
 
     advanceDate(numberOfDays: number): void {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
+        this.accrueInterest();
+        this.startDate = new Date(this.date.toString());
     }
 
-    findTransType(element, index, array) {
-        return element === ''
-    }
+    findDateLastTransaction(acctHist: Transaction[]): Date {
+        let transactions = acctHist.filter(type => type. transactionType === 1 && type.success === 'true');
+
+        let lastTransaction = transactions.pop();
+
+        return lastTransaction.transactionDate;
+        }
 
 }
