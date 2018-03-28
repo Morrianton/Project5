@@ -101,7 +101,7 @@ export class CheckingAccount implements Account {
     advanceDate(numberOfDays: number): void {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
         this.accrueInterest();
-        this.startDate = new Date(this.date.toString());
+        // this.startDate = new Date(this.date.toString());
     }
 
     calcInterest(): number {

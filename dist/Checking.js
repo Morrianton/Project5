@@ -87,7 +87,7 @@ var CheckingAccount = /** @class */ (function () {
     CheckingAccount.prototype.advanceDate = function (numberOfDays) {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
         this.accrueInterest();
-        this.startDate = new Date(this.date.toString());
+        // this.startDate = new Date(this.date.toString());
     };
     CheckingAccount.prototype.calcInterest = function () {
         return (this.interestRate / 12) * this.balance;
