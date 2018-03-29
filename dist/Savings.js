@@ -27,27 +27,31 @@ var SavingsAccount = /** @class */ (function () {
                             this.balance -= amount;
                             message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
                             console.log(message);
-                            this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = true;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = "";
+                            this.transaction = {
+                                transactionType: TransactionType_1.TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: true,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: ""
+                            };
                             this.withdrawlLimit++;
                         }
                         else {
                             message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
                             console.log(message);
-                            this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = false;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = message;
+                            this.transaction = {
+                                transactionType: TransactionType_1.TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: false,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: message
+                            };
                         }
                     }
                     else {
@@ -55,27 +59,31 @@ var SavingsAccount = /** @class */ (function () {
                             this.balance -= amount;
                             message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
                             console.log(message);
-                            this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = true;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = "";
-                            this.withdrawlLimit++;
+                            this.transaction = {
+                                transactionType: TransactionType_1.TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: true,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: ""
+                            };
+                            this.withdrawlLimit = 1;
                         }
                         else {
                             message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
                             console.log(message);
-                            this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = false;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = message;
+                            this.transaction = {
+                                transactionType: TransactionType_1.TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: false,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: message
+                            };
                         }
                     }
                 }
@@ -84,33 +92,47 @@ var SavingsAccount = /** @class */ (function () {
                         this.balance -= amount;
                         message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
                         console.log(message);
-                        this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                        this.transaction.origin = transactionOrigin;
-                        this.transaction.success = true;
-                        this.transaction.amount = amount;
-                        this.transaction.resultBalance = this.balance;
-                        this.transaction.transactionDate = this.date;
-                        this.transaction.description = description;
-                        this.transaction.errorMessage = "";
+                        this.transaction = {
+                            transactionType: TransactionType_1.TransactionType.withdrawal,
+                            origin: transactionOrigin,
+                            success: true,
+                            amount: amount,
+                            resultBalance: this.balance,
+                            transactionDate: this.date,
+                            description: description,
+                            errorMessage: ""
+                        };
                         this.withdrawlLimit = 1;
                     }
                     else {
                         message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
                         console.log(message);
-                        this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                        this.transaction.origin = transactionOrigin;
-                        this.transaction.success = false;
-                        this.transaction.amount = amount;
-                        this.transaction.resultBalance = this.balance;
-                        this.transaction.transactionDate = this.date;
-                        this.transaction.description = description;
-                        this.transaction.errorMessage = message;
+                        this.transaction = {
+                            transactionType: TransactionType_1.TransactionType.withdrawal,
+                            origin: transactionOrigin,
+                            success: false,
+                            amount: amount,
+                            resultBalance: this.balance,
+                            transactionDate: this.date,
+                            description: description,
+                            errorMessage: message
+                        };
                     }
                 }
             }
             else {
                 message = 'You have exceeded the maximum number of phone and online withdrawals. We apologize for any inconvenience.';
                 console.log(message);
+                this.transaction = {
+                    transactionType: TransactionType_1.TransactionType.withdrawal,
+                    origin: transactionOrigin,
+                    success: false,
+                    amount: amount,
+                    resultBalance: this.balance,
+                    transactionDate: this.date,
+                    description: description,
+                    errorMessage: message
+                };
             }
         }
         else {
@@ -118,26 +140,30 @@ var SavingsAccount = /** @class */ (function () {
                 this.balance -= amount;
                 message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
                 console.log(message);
-                this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                this.transaction.origin = transactionOrigin;
-                this.transaction.success = true;
-                this.transaction.amount = amount;
-                this.transaction.resultBalance = this.balance;
-                this.transaction.transactionDate = this.date;
-                this.transaction.description = description;
-                this.transaction.errorMessage = "";
+                this.transaction = {
+                    transactionType: TransactionType_1.TransactionType.withdrawal,
+                    origin: transactionOrigin,
+                    success: true,
+                    amount: amount,
+                    resultBalance: this.balance,
+                    transactionDate: this.date,
+                    description: description,
+                    errorMessage: ""
+                };
             }
             else {
                 message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
                 console.log(message);
-                this.transaction.transactionType = TransactionType_1.TransactionType.withdrawal;
-                this.transaction.origin = transactionOrigin;
-                this.transaction.success = false;
-                this.transaction.amount = amount;
-                this.transaction.resultBalance = this.balance;
-                this.transaction.transactionDate = this.date;
-                this.transaction.description = description;
-                this.transaction.errorMessage = message;
+                this.transaction = {
+                    transactionType: TransactionType_1.TransactionType.withdrawal,
+                    origin: transactionOrigin,
+                    success: false,
+                    amount: amount,
+                    resultBalance: this.balance,
+                    transactionDate: this.date,
+                    description: description,
+                    errorMessage: message
+                };
             }
         }
         this.accountHistory.push(this.transaction);
@@ -149,26 +175,30 @@ var SavingsAccount = /** @class */ (function () {
         if (amount > 0) {
             message = "$" + amount + " has been added to your account. Your new balance is $" + this.balance + ".";
             console.log(message);
-            this.transaction.transactionType = TransactionType_1.TransactionType.deposit;
-            this.transaction.origin = transactionOrigin;
-            this.transaction.success = true;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = "";
+            this.transaction = {
+                transactionType: TransactionType_1.TransactionType.withdrawal,
+                origin: transactionOrigin,
+                success: true,
+                amount: amount,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: ""
+            };
         }
         else {
             message = "An invalid amount has been entered.";
             console.log(message);
-            this.transaction.transactionType = TransactionType_1.TransactionType.deposit;
-            this.transaction.origin = transactionOrigin;
-            this.transaction.success = false;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = message;
+            this.transaction = {
+                transactionType: TransactionType_1.TransactionType.withdrawal,
+                origin: transactionOrigin,
+                success: false,
+                amount: amount,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: message
+            };
         }
         this.accountHistory.push(this.transaction);
         return this.transaction;
@@ -208,23 +238,20 @@ var SavingsAccount = /** @class */ (function () {
     SavingsAccount.prototype.findDateLastTransaction = function (acctHist) {
         var transactions = acctHist.filter(function (type) { return type.transactionType === TransactionType_1.TransactionType.withdrawal && type.success === true; });
         var lastTransaction = transactions.pop();
-        console.log(lastTransaction.transactionDate);
         return lastTransaction.transactionDate;
     };
     SavingsAccount.prototype.compareMonths = function (date) {
         var yearsDifference;
         var monthsDifference;
         var totalMonths;
-        if (this.date > date) {
-            yearsDifference = this.date.getFullYear() - date.getFullYear();
-            if (this.date.getMonth() < date.getMonth()) {
-                monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
-            }
-            else {
-                monthsDifference = this.date.getMonth() - date.getMonth();
-            }
-            totalMonths = (yearsDifference * 12) + monthsDifference;
+        yearsDifference = this.date.getFullYear() - date.getFullYear();
+        if (this.date.getMonth() < date.getMonth()) {
+            monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
         }
+        else {
+            monthsDifference = this.date.getMonth() - date.getMonth();
+        }
+        totalMonths = (yearsDifference * 12) + monthsDifference;
         return totalMonths;
     };
     return SavingsAccount;
