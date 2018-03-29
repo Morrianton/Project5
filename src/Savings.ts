@@ -47,27 +47,32 @@ export class SavingsAccount implements Account {
                             this.balance -= amount;
                             message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
                             console.log(message);
-                            this.transaction.transactionType = TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = true;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = "";
+                            this.transaction = {
+                                transactionType: TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: true,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: ""
+                            };
+
                             this.withdrawlLimit++;
                         }
                         else {
                             message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
                             console.log(message);
-                            this.transaction.transactionType = TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = false;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = message;
+                            this.transaction = {
+                                transactionType: TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: false,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: message
+                            };
                         }
 
                     }
@@ -76,27 +81,32 @@ export class SavingsAccount implements Account {
                             this.balance -= amount;
                             message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
                             console.log(message);
-                            this.transaction.transactionType = TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = true;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = "";
-                            this.withdrawlLimit++;
+                            this.transaction = {
+                                transactionType: TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: true,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: ""
+                            };
+
+                            this.withdrawlLimit = 1;
                         }
                         else {
                             message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
                             console.log(message);
-                            this.transaction.transactionType = TransactionType.withdrawal;
-                            this.transaction.origin = transactionOrigin;
-                            this.transaction.success = false;
-                            this.transaction.amount = amount;
-                            this.transaction.resultBalance = this.balance;
-                            this.transaction.transactionDate = this.date;
-                            this.transaction.description = description;
-                            this.transaction.errorMessage = message;
+                            this.transaction = {
+                                transactionType: TransactionType.withdrawal,
+                                origin: transactionOrigin,
+                                success: false,
+                                amount: amount,
+                                resultBalance: this.balance,
+                                transactionDate: this.date,
+                                description: description,
+                                errorMessage: message
+                            };
                         }
                     }
 
@@ -106,27 +116,32 @@ export class SavingsAccount implements Account {
                         this.balance -= amount;
                         message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
                         console.log(message);
-                        this.transaction.transactionType = TransactionType.withdrawal;
-                        this.transaction.origin = transactionOrigin;
-                        this.transaction.success = true;
-                        this.transaction.amount = amount;
-                        this.transaction.resultBalance = this.balance;
-                        this.transaction.transactionDate = this.date;
-                        this.transaction.description = description;
-                        this.transaction.errorMessage = "";
+                        this.transaction = {
+                            transactionType: TransactionType.withdrawal,
+                            origin: transactionOrigin,
+                            success: true,
+                            amount: amount,
+                            resultBalance: this.balance,
+                            transactionDate: this.date,
+                            description: description,
+                            errorMessage: ""
+                        };
+
                         this.withdrawlLimit = 1;
                     }
                     else {
                         message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
                         console.log(message);
-                        this.transaction.transactionType = TransactionType.withdrawal;
-                        this.transaction.origin = transactionOrigin;
-                        this.transaction.success = false;
-                        this.transaction.amount = amount;
-                        this.transaction.resultBalance = this.balance;
-                        this.transaction.transactionDate = this.date;
-                        this.transaction.description = description;
-                        this.transaction.errorMessage = message;
+                        this.transaction = {
+                            transactionType: TransactionType.withdrawal,
+                            origin: transactionOrigin,
+                            success: false,
+                            amount: amount,
+                            resultBalance: this.balance,
+                            transactionDate: this.date,
+                            description: description,
+                            errorMessage: message
+                        };
                     }
                 }
 
@@ -134,6 +149,16 @@ export class SavingsAccount implements Account {
             else {
                 message = 'You have exceeded the maximum number of phone and online withdrawals. We apologize for any inconvenience.';
                 console.log(message);
+                this.transaction = {
+                    transactionType: TransactionType.withdrawal,
+                    origin: transactionOrigin,
+                    success: false,
+                    amount: amount,
+                    resultBalance: this.balance,
+                    transactionDate: this.date,
+                    description: description,
+                    errorMessage: message
+                };
             }
 
         }
@@ -142,26 +167,30 @@ export class SavingsAccount implements Account {
                 this.balance -= amount;
                 message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
                 console.log(message);
-                this.transaction.transactionType = TransactionType.withdrawal;
-                this.transaction.origin = transactionOrigin;
-                this.transaction.success = true;
-                this.transaction.amount = amount;
-                this.transaction.resultBalance = this.balance;
-                this.transaction.transactionDate = this.date;
-                this.transaction.description = description;
-                this.transaction.errorMessage = "";
+                this.transaction = {
+                    transactionType: TransactionType.withdrawal,
+                    origin: transactionOrigin,
+                    success: true,
+                    amount: amount,
+                    resultBalance: this.balance,
+                    transactionDate: this.date,
+                    description: description,
+                    errorMessage: ""
+                };
             }
             else {
                 message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
                 console.log(message);
-                this.transaction.transactionType = TransactionType.withdrawal;
-                this.transaction.origin = transactionOrigin;
-                this.transaction.success = false;
-                this.transaction.amount = amount;
-                this.transaction.resultBalance = this.balance;
-                this.transaction.transactionDate = this.date;
-                this.transaction.description = description;
-                this.transaction.errorMessage = message;
+                this.transaction = {
+                    transactionType: TransactionType.withdrawal,
+                    origin: transactionOrigin,
+                    success: false,
+                    amount: amount,
+                    resultBalance: this.balance,
+                    transactionDate: this.date,
+                    description: description,
+                    errorMessage: message
+                };
             }
         }
 
@@ -175,26 +204,30 @@ export class SavingsAccount implements Account {
         if(amount > 0) {
             message = `$${amount} has been added to your account. Your new balance is $${this.balance}.`;
             console.log(message);
-            this.transaction.transactionType = TransactionType.deposit;
-            this.transaction.origin = transactionOrigin;
-            this.transaction.success = true;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = "";
+            this.transaction = {
+                transactionType: TransactionType.deposit,
+                origin: transactionOrigin,
+                success: true,
+                amount: amount,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: ""
+            };
         }
         else{
             message = "An invalid amount has been entered.";
             console.log(message);
-            this.transaction.transactionType = TransactionType.deposit;
-            this.transaction.origin = transactionOrigin;
-            this.transaction.success = false;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = message;
+            this.transaction = {
+                transactionType: TransactionType.deposit,
+                origin: transactionOrigin,
+                success: false,
+                amount: amount,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: message
+            };
         }
         this.accountHistory.push(this.transaction);
         return this.transaction;
@@ -240,7 +273,6 @@ export class SavingsAccount implements Account {
         let transactions = acctHist.filter(type => type. transactionType === TransactionType.withdrawal && type.success === true);
 
         let lastTransaction = transactions.pop();
-        console.log(lastTransaction.transactionDate);
 
         return lastTransaction.transactionDate;
     }
@@ -249,19 +281,18 @@ export class SavingsAccount implements Account {
         let yearsDifference: number;
         let monthsDifference: number;
         let totalMonths: number;
-        if (this.date > date) {
-            yearsDifference = this.date.getFullYear() - date.getFullYear();
 
-            if (this.date.getMonth() < date.getMonth()) {
-                monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
-            }
-            else {
-                monthsDifference = this.date.getMonth() - date.getMonth();
-            }
+        yearsDifference = this.date.getFullYear() - date.getFullYear();
 
-            totalMonths = (yearsDifference * 12) + monthsDifference;
-
+        if (this.date.getMonth() < date.getMonth()) {
+            monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
         }
+        else {
+            monthsDifference = this.date.getMonth() - date.getMonth();
+        }
+
+        totalMonths = (yearsDifference * 12) + monthsDifference;
+
         return totalMonths;
     }
 

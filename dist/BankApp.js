@@ -45,11 +45,32 @@ var mySavings = new Savings_1.SavingsAccount("Bryson L. Smith", 10 / 19 / 1985);
 // //     + mySavings.dateOpened + '\n'
 // // );
 // //
-for (var i = 0; i < 7; i++) {
-    mySavings.withdrawMoney(100, 'Disneyland Vacation', 2);
-    console.log(mySavings.balance); // 9400 after 6 $100 withdrawls
-}
-console.log(mySavings.accountHistory);
+// for(let i = 0; i < 7; i++) {
+//     mySavings.withdrawMoney(100, 'Disneyland Vacation', 2);
+//     console.log(mySavings.balance); // 9400 after 6 $100 withdrawls, or 9900 with one iteration
+// }
+// console.log(mySavings.accountHistory);
+// mySavings.withdrawMoney(250, "20th Anniversary", 1); // 9650
+// mySavings.withdrawMoney(25, "Eating Out", 2); // 9625
+// mySavings.withdrawMoney(35, "Gas for Truck", 1); // 9590
+// mySavings.withdrawMoney(10, "Toy for Child #1", 2); // 9580
+// mySavings.withdrawMoney(750, "Flat Screen TV", 1); // 8830
+// mySavings.withdrawMoney(125, "Something for Me", 2); // FAIL
+//
+// mySavings.withdrawMoney(125, "Something for Me", 3); // 8705
+// mySavings.withdrawMoney(3, "Slurpy", 3);// 8702
+//
+// mySavings.withdrawMoney(12500, "Pay Off Debts", 3); // FAIL
+mySavings.showBalance(); // 10000
+mySavings.withdrawMoney(100, "", 1); // 9900
+mySavings.advanceDate(30);
+console.log(mySavings.date); // April 28, 2018
+mySavings.showBalance(); // 9916.50
+mySavings.depositMoney(2500, "", 2); // 12416.50
+mySavings.advanceDate(60);
+console.log(mySavings.date); // June 28, 2018
+mySavings.showBalance(); // 12457.32
+console.log(mySavings.accountHistory); // 2 Xactions
 // mySavings.advanceDate(365);
 // console.log(mySavings.balance); // 10201.84 
 //# sourceMappingURL=BankApp.js.map

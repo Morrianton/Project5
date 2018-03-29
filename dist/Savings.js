@@ -176,7 +176,7 @@ var SavingsAccount = /** @class */ (function () {
             message = "$" + amount + " has been added to your account. Your new balance is $" + this.balance + ".";
             console.log(message);
             this.transaction = {
-                transactionType: TransactionType_1.TransactionType.withdrawal,
+                transactionType: TransactionType_1.TransactionType.deposit,
                 origin: transactionOrigin,
                 success: true,
                 amount: amount,
@@ -190,7 +190,7 @@ var SavingsAccount = /** @class */ (function () {
             message = "An invalid amount has been entered.";
             console.log(message);
             this.transaction = {
-                transactionType: TransactionType_1.TransactionType.withdrawal,
+                transactionType: TransactionType_1.TransactionType.deposit,
                 origin: transactionOrigin,
                 success: false,
                 amount: amount,

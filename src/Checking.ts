@@ -75,27 +75,32 @@ export class CheckingAccount implements Account {
         if(amount > 0) {
             message = `$${amount} has been added to your account. Your new balance is $${this.balance}.`;
             console.log(message);
-            this.transaction.transactionType = TransactionType.deposit;
-            this.transaction.origin = transactionOrigin;
-            this.transaction.success = true;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = "";
+            this.transaction = {
+                transactionType: TransactionType.deposit,
+                origin: transactionOrigin,
+                success: true,
+                amount: amount,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: ""
+            }
         }
         else{
             message = "An invalid amount has been entered.";
             console.log(message);
-            this.transaction.transactionType = TransactionType.deposit;
-            this.transaction.origin = transactionOrigin;
-            this.transaction.success = false;
-            this.transaction.amount = amount;
-            this.transaction.resultBalance = this.balance;
-            this.transaction.transactionDate = this.date;
-            this.transaction.description = description;
-            this.transaction.errorMessage = message;
+            this.transaction = {
+                transactionType: TransactionType.deposit,
+                origin: transactionOrigin,
+                success: true,
+                amount: amount,
+                resultBalance: this.balance,
+                transactionDate: this.date,
+                description: description,
+                errorMessage: ""
+            }
         }
+
         this.accountHistory.push(this.transaction);
         return this.transaction;
     }
@@ -123,19 +128,18 @@ export class CheckingAccount implements Account {
         let yearsDifference: number;
         let monthsDifference: number;
         let totalMonths: number;
-        if (this.date > date) {
-            yearsDifference = this.date.getFullYear() - date.getFullYear();
 
-            if (this.date.getMonth() < date.getMonth()) {
-                monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
-            }
-            else {
-                monthsDifference = this.date.getMonth() - date.getMonth();
-            }
+        yearsDifference = this.date.getFullYear() - date.getFullYear();
 
-            totalMonths = (yearsDifference * 12) + monthsDifference;
-
+        if (this.date.getMonth() < date.getMonth()) {
+            monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
         }
+        else {
+            monthsDifference = this.date.getMonth() - date.getMonth();
+        }
+
+        totalMonths = (yearsDifference * 12) + monthsDifference;
+
         return totalMonths;
     }
 }
