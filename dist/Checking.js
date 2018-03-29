@@ -95,25 +95,28 @@ var CheckingAccount = /** @class */ (function () {
         return (this.interestRate / 12) * this.balance;
     };
     CheckingAccount.prototype.accrueInterest = function () {
+        for (var i = 0; i < this.compareMonths(this.dateOpened); i++) {
+            this.balance += this.calcInterest();
+        }
+        this.balance = Math.round(100 * this.balance) / 100;
+    };
+    ;
+    CheckingAccount.prototype.compareMonths = function (date) {
         var yearsDifference;
         var monthsDifference;
         var totalMonths;
-        if (this.date > this.dateOpened) {
-            yearsDifference = this.date.getFullYear() - this.dateOpened.getFullYear();
-            if (this.date.getMonth() < this.dateOpened.getMonth()) {
-                monthsDifference = (this.date.getMonth() - this.dateOpened.getMonth()) * -1;
+        if (this.date > date) {
+            yearsDifference = this.date.getFullYear() - date.getFullYear();
+            if (this.date.getMonth() < date.getMonth()) {
+                monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
             }
             else {
-                monthsDifference = this.date.getMonth() - this.dateOpened.getMonth();
+                monthsDifference = this.date.getMonth() - date.getMonth();
             }
             totalMonths = (yearsDifference * 12) + monthsDifference;
-            for (var i = 0; i < totalMonths; i++) {
-                this.balance += this.calcInterest();
-            }
-            this.balance = Math.round(100 * this.balance) / 100;
         }
+        return totalMonths;
     };
-    ;
     CheckingAccount = __decorate([
         Decorators_1.displayClassNameWithPurpose('To prove TypeScript wrong.')
     ], CheckingAccount);

@@ -40,6 +40,8 @@ export class CheckingAccount implements Account {
                 message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
                 console.log(message);
                 this.transaction = {
+                    transactionType: TransactionType.withdrawal,
+                    origin: transactionOrigin,
                     success: true,
                     amount: amount,
                     resultBalance: this.balance,
@@ -109,27 +111,32 @@ export class CheckingAccount implements Account {
     }
 
     accrueInterest(): void {
-        let yearsDifference;
-        let monthsDifference;
-        let totalMonths;
-        if(this.date > this.dateOpened){
-            yearsDifference = this.date.getFullYear() - this.dateOpened.getFullYear();
 
-            if(this.date.getMonth() < this.dateOpened.getMonth()) {
-                monthsDifference = (this.date.getMonth() - this.dateOpened.getMonth()) * -1;
-            }
-            else {
-                monthsDifference = this.date.getMonth() - this.dateOpened.getMonth();
-            }
-
-            totalMonths = (yearsDifference * 12) + monthsDifference;
-
-            for(let i = 0; i < totalMonths; i++) {
+            for(let i = 0; i < this.compareMonths(this.dateOpened); i++) {
                 this.balance += this.calcInterest();
             }
 
             this.balance = Math.round(100 * this.balance) / 100;
+        };
+
+    compareMonths(date: Date): number {
+        let yearsDifference: number;
+        let monthsDifference: number;
+        let totalMonths: number;
+        if (this.date > date) {
+            yearsDifference = this.date.getFullYear() - date.getFullYear();
+
+            if (this.date.getMonth() < date.getMonth()) {
+                monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
+            }
+            else {
+                monthsDifference = this.date.getMonth() - date.getMonth();
+            }
+
+            totalMonths = (yearsDifference * 12) + monthsDifference;
+
         }
-    };
+        return totalMonths;
+    }
 }
 

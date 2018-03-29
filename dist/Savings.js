@@ -22,7 +22,7 @@ var SavingsAccount = /** @class */ (function () {
         if (transactionOrigin !== TransactionOrigin_1.TransactionOrigin.branch) {
             if (this.withdrawlLimit < 6) {
                 if (this.accountHistory.length >= 1) {
-                    if (this.findDateLastTransaction(this.accountHistory).getMonth() / this.date.getMonth() < 1) {
+                    if (this.compareMonths(this.findDateLastTransaction(this.accountHistory)) < 1) {
                         if (amount <= this.balance) {
                             this.balance -= amount;
                             message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
@@ -180,23 +180,24 @@ var SavingsAccount = /** @class */ (function () {
         console.log("Your balance in this account is $" + this.balance + ".");
     };
     SavingsAccount.prototype.accrueInterest = function () {
-        var yearsDifference;
-        var monthsDifference;
-        var totalMonths;
-        if (this.date > this.dateOpened) {
-            yearsDifference = this.date.getFullYear() - this.dateOpened.getFullYear();
-            if (this.date.getMonth() < this.dateOpened.getMonth()) {
-                monthsDifference = (this.date.getMonth() - this.dateOpened.getMonth()) * -1;
-            }
-            else {
-                monthsDifference = this.date.getMonth() - this.dateOpened.getMonth();
-            }
-            totalMonths = (yearsDifference * 12) + monthsDifference;
-            for (var i = 0; i < totalMonths; i++) {
-                this.balance += this.calcInterest();
-            }
-            this.balance = Math.round(100 * this.balance) / 100;
+        // let yearsDifference;
+        // let monthsDifference;
+        // let totalMonths;
+        // if(this.date > this.dateOpened){
+        //     yearsDifference = this.date.getFullYear() - this.dateOpened.getFullYear();
+        //
+        //     if(this.date.getMonth() < this.dateOpened.getMonth()) {
+        //         monthsDifference = (this.date.getMonth() - this.dateOpened.getMonth()) * -1;
+        //     }
+        //     else {
+        //         monthsDifference = this.date.getMonth() - this.dateOpened.getMonth();
+        //     }
+        //
+        //     totalMonths = (yearsDifference * 12) + monthsDifference;
+        for (var i = 0; i < this.compareMonths(this.dateOpened); i++) {
+            this.balance += this.calcInterest();
         }
+        this.balance = Math.round(100 * this.balance) / 100;
     };
     ;
     SavingsAccount.prototype.advanceDate = function (numberOfDays) {
@@ -209,6 +210,22 @@ var SavingsAccount = /** @class */ (function () {
         var lastTransaction = transactions.pop();
         console.log(lastTransaction.transactionDate);
         return lastTransaction.transactionDate;
+    };
+    SavingsAccount.prototype.compareMonths = function (date) {
+        var yearsDifference;
+        var monthsDifference;
+        var totalMonths;
+        if (this.date > date) {
+            yearsDifference = this.date.getFullYear() - date.getFullYear();
+            if (this.date.getMonth() < date.getMonth()) {
+                monthsDifference = (this.date.getMonth() - date.getMonth()) * -1;
+            }
+            else {
+                monthsDifference = this.date.getMonth() - date.getMonth();
+            }
+            totalMonths = (yearsDifference * 12) + monthsDifference;
+        }
+        return totalMonths;
     };
     return SavingsAccount;
 }());
