@@ -29,6 +29,8 @@ var CheckingAccount = /** @class */ (function () {
             message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
             console.log(message);
             this.transaction = {
+                transactionType: TransactionType_1.TransactionType.withdrawal,
+                origin: transactionOrigin,
                 success: true,
                 amount: amount,
                 resultBalance: this.balance,
