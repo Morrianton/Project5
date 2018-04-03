@@ -15,12 +15,12 @@ var SavingsAccount = /** @class */ (function () {
         this.startDate = new Date();
         this.dateOpened = new Date();
         this.transaction = {};
-        this.withdrawlLimit = 0;
+        this.withdrawalLimit = 0;
     }
     SavingsAccount.prototype.withdrawMoney = function (amount, description, transactionOrigin) {
         var message;
         if (transactionOrigin !== TransactionOrigin_1.TransactionOrigin.branch) {
-            if (this.withdrawlLimit < 6) {
+            if (this.withdrawalLimit < 6) {
                 if (this.accountHistory.length >= 1) {
                     if (this.compareMonths(this.findDateLastTransaction(this.accountHistory)) < 1) {
                         if (amount <= this.balance) {
@@ -37,7 +37,7 @@ var SavingsAccount = /** @class */ (function () {
                                 description: description,
                                 errorMessage: ""
                             };
-                            this.withdrawlLimit++;
+                            this.withdrawalLimit++;
                         }
                         else {
                             message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
@@ -69,7 +69,7 @@ var SavingsAccount = /** @class */ (function () {
                                 description: description,
                                 errorMessage: ""
                             };
-                            this.withdrawlLimit = 1;
+                            this.withdrawalLimit = 1;
                         }
                         else {
                             message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";
@@ -102,7 +102,7 @@ var SavingsAccount = /** @class */ (function () {
                             description: description,
                             errorMessage: ""
                         };
-                        this.withdrawlLimit = 1;
+                        this.withdrawalLimit = 1;
                     }
                     else {
                         message = "$" + amount + " exceeds your current balance. Please enter an amount less than or equal to $" + this.balance + ".";

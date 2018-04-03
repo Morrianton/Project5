@@ -1,7 +1,8 @@
 import { CheckingAccount } from "./Checking";
 import {SavingsAccount} from "./Savings";
+import {RetirementAccount} from "./Retirement";
 
-let myChecking = new CheckingAccount("Bryson L. Smith", "October 19, 1985");
+// let myChecking = new CheckingAccount("Bryson L. Smith", "October 19, 1985");
 
 // console.log(myChecking.balance);
 // console.log(myChecking.date);
@@ -39,7 +40,7 @@ let myChecking = new CheckingAccount("Bryson L. Smith", "October 19, 1985");
 
 // -------------------------------------------------------------------------
 
-let mySavings = new SavingsAccount("Bryson L. Smith", 10/19/1985);
+// let mySavings = new SavingsAccount("Bryson L. Smith", 10/19/1985);
 // //
 // // console.log(
 // //     '$' + mySavings.balance + '\n'
@@ -60,29 +61,66 @@ let mySavings = new SavingsAccount("Bryson L. Smith", 10/19/1985);
 // mySavings.withdrawMoney(10, "Toy for Child #1", 2); // 9580
 // mySavings.withdrawMoney(750, "Flat Screen TV", 1); // 8830
 // mySavings.withdrawMoney(125, "Something for Me", 2); // FAIL
+// mySavings.withdrawMoney(1, "test", 1); // FAIL
+// mySavings.withdrawMoney(1, "test", 1); // FAIL
+// mySavings.withdrawMoney(1, "test", 1); // FAIL
 //
 // mySavings.withdrawMoney(125, "Something for Me", 3); // 8705
 // mySavings.withdrawMoney(3, "Slurpy", 3);// 8702
 //
 // mySavings.withdrawMoney(12500, "Pay Off Debts", 3); // FAIL
 
-mySavings.showBalance(); // 10000
+// mySavings.showBalance(); // 10000
+//
+// mySavings.withdrawMoney(100, "", 1); // 9900
 
-mySavings.withdrawMoney(100, "", 1); // 9900
+// mySavings.advanceDate(1);
+// console.log(mySavings.date); // March 30, 2018
+//
+// mySavings.showBalance(); // 10000
+//
+// mySavings.advanceDate(5);
+// console.log(mySavings.date); // April 4, 2018
+//
+// mySavings.showBalance(); // 10016.67
 
-mySavings.advanceDate(30);
-console.log(mySavings.date); // April 28, 2018
-
-mySavings.showBalance(); // 9916.50
-
-mySavings.depositMoney(2500, "", 2); // 12416.50
-
-mySavings.advanceDate(60);
-console.log(mySavings.date); // June 28, 2018
-
-mySavings.showBalance(); // 12457.32
-
-console.log(mySavings.accountHistory); // 2 Xactions
+// mySavings.advanceDate(30);
+// console.log(mySavings.date); // April 28, 2018
+//
+// mySavings.showBalance(); // 9916.50
+//
+// mySavings.depositMoney(2500, "", 2); // 12416.50
+//
+// mySavings.advanceDate(60);
+// console.log(mySavings.date); // June 28, 2018
+//
+// mySavings.showBalance(); // 12457.32
+//
+// console.log(mySavings.accountHistory); // 2 Xactions
 
 // mySavings.advanceDate(365);
 // console.log(mySavings.balance); // 10201.84
+
+// -------------------------------------------------------------------------
+
+let myRetirement = new RetirementAccount('Bryson Smith', "November 3, 1952"); // @ retirement age
+
+myRetirement.withdrawMoney(150000, 'Rental Property', 3); // FAIL
+
+myRetirement.withdrawMoney(15000, 'Boat', 3); // 85,000
+
+myRetirement.advanceDate(365); // 87585.36
+
+myRetirement.showBalance();
+
+myRetirement.depositMoney(1000, "Tax Return", 1); // 88585.36
+
+myRetirement.advanceDate(30); // 88806.82
+
+myRetirement.showBalance();
+
+for(let i = 0; i < 8; i++) {
+    myRetirement.withdrawMoney(1000, "TEST", 2); // FAIL 3x
+}
+
+console.log(myRetirement.accountHistory); // 10x Xactions

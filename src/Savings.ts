@@ -17,7 +17,7 @@ export class SavingsAccount implements Account {
     startDate: Date;
     dateOpened: Date;
     transaction: Transaction;
-    withdrawlLimit: number;
+    withdrawalLimit: number;
 
     constructor(accountHolder, birthDate){
         this.accountHolderName = accountHolder;
@@ -30,7 +30,7 @@ export class SavingsAccount implements Account {
         this.startDate = new Date();
         this.dateOpened = new Date();
         this.transaction = <Transaction>{ };
-        this.withdrawlLimit = 0;
+        this.withdrawalLimit = 0;
     }
 
     withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction {
@@ -38,7 +38,7 @@ export class SavingsAccount implements Account {
 
         if (transactionOrigin !== TransactionOrigin.branch) {
 
-            if (this.withdrawlLimit < 6) {
+            if (this.withdrawalLimit < 6) {
 
                 if (this.accountHistory.length >= 1) {
 
@@ -58,7 +58,7 @@ export class SavingsAccount implements Account {
                                 errorMessage: ""
                             };
 
-                            this.withdrawlLimit++;
+                            this.withdrawalLimit++;
                         }
                         else {
                             message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
@@ -92,7 +92,7 @@ export class SavingsAccount implements Account {
                                 errorMessage: ""
                             };
 
-                            this.withdrawlLimit = 1;
+                            this.withdrawalLimit = 1;
                         }
                         else {
                             message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
@@ -127,7 +127,7 @@ export class SavingsAccount implements Account {
                             errorMessage: ""
                         };
 
-                        this.withdrawlLimit = 1;
+                        this.withdrawalLimit = 1;
                     }
                     else {
                         message = `$${amount} exceeds your current balance. Please enter an amount less than or equal to $${this.balance}.`;
