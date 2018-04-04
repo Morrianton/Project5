@@ -18,7 +18,7 @@ var CheckingAccount = /** @class */ (function () {
         this.accountType = 1;
         this.interestRate = 0.01;
         this.date = new Date();
-        this.startDate = new Date();
+        this.lastAdvanceDate = new Date();
         this.dateOpened = new Date();
         this.transaction = {};
     }
@@ -93,13 +93,13 @@ var CheckingAccount = /** @class */ (function () {
     CheckingAccount.prototype.advanceDate = function (numberOfDays) {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
         this.accrueInterest();
-        // this.startDate = new Date(this.date.toString());
+        this.lastAdvanceDate = new Date(this.date.setDate(this.date.getDate()));
     };
     CheckingAccount.prototype.calcInterest = function () {
         return (this.interestRate / 12) * this.balance;
     };
     CheckingAccount.prototype.accrueInterest = function () {
-        for (var i = 0; i < this.compareMonths(this.dateOpened); i++) {
+        for (var i = 0; i < this.compareMonths(this.lastAdvanceDate); i++) {
             this.balance += this.calcInterest();
         }
         this.balance = Math.round(100 * this.balance) / 100;

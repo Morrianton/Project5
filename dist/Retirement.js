@@ -11,7 +11,7 @@ var RetirementAccount = /** @class */ (function () {
         this.accountType = 3;
         this.interestRate = 0.03;
         this.date = new Date();
-        this.startDate = new Date();
+        this.lastAdvanceDate = new Date();
         this.dateOpened = new Date();
         this.transaction = {};
         this.withdrawalLimit = 0;
@@ -22,7 +22,7 @@ var RetirementAccount = /** @class */ (function () {
             if (transactionOrigin !== TransactionOrigin_1.TransactionOrigin.branch) {
                 if (this.withdrawalLimit < 6) {
                     if (this.accountHistory.length >= 1) {
-                        if (this.compareMonths(this.findDateLastTransaction(this.accountHistory)) < 1) {
+                        if (this.compareMonths(this.findDateLastWithdrawalTransaction(this.accountHistory)) < 1) {
                             if (amount <= this.balance) {
                                 this.balance -= amount;
                                 message = "$" + amount + " has been withdrawn from your account. Your new balance is $" + this.balance + ".";
@@ -171,7 +171,7 @@ var RetirementAccount = /** @class */ (function () {
             if (transactionOrigin !== TransactionOrigin_1.TransactionOrigin.branch) {
                 if (this.withdrawalLimit < 6) {
                     if (this.accountHistory.length >= 1) {
-                        if (this.compareMonths(this.findDateLastTransaction(this.accountHistory)) < 1) {
+                        if (this.compareMonths(this.findDateLastWithdrawalTransaction(this.accountHistory)) < 1) {
                             if ((amount * 1.1) <= this.balance) {
                                 this.balance -= (amount * 1.1);
                                 message = "$" + amount + " has been withdrawn from your account. A 10% early withdrawal fee equaling " + amount * .1 + " has also been assessed; your account has not yet matured. Your new balance is $" + this.balance + ".";
@@ -374,7 +374,7 @@ var RetirementAccount = /** @class */ (function () {
         //     }
         //
         //     totalMonths = (yearsDifference * 12) + monthsDifference;
-        for (var i = 0; i < this.compareMonths(this.dateOpened); i++) {
+        for (var i = 0; i < this.compareMonths(this.lastAdvanceDate); i++) {
             this.balance += this.calcInterest();
         }
         this.balance = Math.round(100 * this.balance) / 100;
@@ -383,9 +383,9 @@ var RetirementAccount = /** @class */ (function () {
     RetirementAccount.prototype.advanceDate = function (numberOfDays) {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
         this.accrueInterest();
-        this.startDate = new Date(this.date.toString());
+        this.lastAdvanceDate = new Date(this.date.setDate(this.date.getDate()));
     };
-    RetirementAccount.prototype.findDateLastTransaction = function (acctHist) {
+    RetirementAccount.prototype.findDateLastWithdrawalTransaction = function (acctHist) {
         var transactions = acctHist.filter(function (type) { return type.transactionType === TransactionType_1.TransactionType.withdrawal && type.success === true; });
         var lastTransaction = transactions.pop();
         return lastTransaction.transactionDate;

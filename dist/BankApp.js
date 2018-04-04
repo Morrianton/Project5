@@ -91,7 +91,7 @@ var Retirement_1 = require("./Retirement");
 // mySavings.advanceDate(365);
 // console.log(mySavings.balance); // 10201.84
 // -------------------------------------------------------------------------
-var myRetirement = new Retirement_1.RetirementAccount('Bryson Smith', "November 3, 1952"); // @ retirement age
+var myRetirement = new Retirement_1.RetirementAccount('Bryson Smith', new Date(1985, 9, 19)); // @  retirement age
 myRetirement.withdrawMoney(150000, 'Rental Property', 3); // FAIL
 myRetirement.withdrawMoney(15000, 'Boat', 3); // 85,000
 myRetirement.advanceDate(365); // 87585.36
@@ -100,7 +100,9 @@ myRetirement.depositMoney(1000, "Tax Return", 1); // 88585.36
 myRetirement.advanceDate(30); // 88806.82
 myRetirement.showBalance();
 for (var i = 0; i < 8; i++) {
-    myRetirement.withdrawMoney(1000, "TEST", 2); // FAIL 3x
+    myRetirement.withdrawMoney(1000, "TEST", 2); // FAIL 2x
 }
-console.log(myRetirement.accountHistory); // 10x Xactions
+myRetirement.advanceDate(730); // 87920.73
+myRetirement.showBalance();
+console.log(myRetirement.accountHistory); // 11x Xactions
 //# sourceMappingURL=BankApp.js.map
