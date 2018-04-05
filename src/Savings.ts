@@ -14,8 +14,8 @@ export class SavingsAccount implements Account {
     accountType: AccountType;
     interestRate: number;
     date: Date;
-    startDate: Date;
     dateOpened: Date;
+    lastAdvanceDate: Date;
     transaction: Transaction;
     withdrawalLimit: number;
 
@@ -27,10 +27,11 @@ export class SavingsAccount implements Account {
         this.accountType = 2;
         this.interestRate = 0.02;
         this.date = new Date();
-        this.startDate = new Date();
         this.dateOpened = new Date();
+        this.lastAdvanceDate = this.dateOpened;
         this.transaction = <Transaction>{ };
         this.withdrawalLimit = 0;
+
     }
 
     withdrawMoney(amount: number, description: string, transactionOrigin: TransactionOrigin): Transaction {
@@ -42,7 +43,7 @@ export class SavingsAccount implements Account {
 
                 if (this.accountHistory.length >= 1) {
 
-                    if (this.compareMonths(this.findDateLastTransaction(this.accountHistory)) < 1) {
+                    if (this.compareMonths(this.findDateLastWithdrawalTransaction(this.accountHistory)) < 1) {
                         if (amount <= this.balance) {
                             this.balance -= amount;
                             message = `$${amount} has been withdrawn from your account. Your new balance is $${this.balance}.`;
@@ -256,20 +257,20 @@ export class SavingsAccount implements Account {
         //
         //     totalMonths = (yearsDifference * 12) + monthsDifference;
 
-            for(let i = 0; i < this.compareMonths(this.dateOpened); i++) {
-                this.balance += this.calcInterest();
-            }
+        for(let i = 0; i < this.compareMonths(this.lastAdvanceDate); i++) {
+            this.balance += this.calcInterest();
+        }
 
-            this.balance = Math.round(100 * this.balance) / 100;
-        };
+        this.balance = Math.round(100 * this.balance) / 100;
+    };
 
     advanceDate(numberOfDays: number): void {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
         this.accrueInterest();
-        this.startDate = new Date(this.date.toString());
+        this.lastAdvanceDate = new Date(this.date.setDate(this.date.getDate()));
     }
 
-    findDateLastTransaction(acctHist: Transaction[]): Date {
+    findDateLastWithdrawalTransaction(acctHist: Transaction[]): Date {
         let transactions = acctHist.filter(type => type. transactionType === TransactionType.withdrawal && type.success === true);
 
         let lastTransaction = transactions.pop();

@@ -2,7 +2,7 @@ import { CheckingAccount } from "./Checking";
 import {SavingsAccount} from "./Savings";
 import {RetirementAccount} from "./Retirement";
 
-// let myChecking = new CheckingAccount("Bryson L. Smith", "October 19, 1985");
+let myChecking = new CheckingAccount("Bryson L. Smith", "October 19, 1985");
 
 // console.log(myChecking.balance);
 // console.log(myChecking.date);
@@ -12,8 +12,8 @@ import {RetirementAccount} from "./Retirement";
 // myChecking.advanceDate(30);
 // console.log(myChecking.balance);
 //
-// myChecking.advanceDate(365);
-// console.log(myChecking.balance);
+myChecking.advanceDate(365);
+console.log(myChecking.balance);
 //
 // myChecking.depositMoney(350, "San Diego Vacation Fund", 2);
 // // console.log(myChecking.balance);
@@ -40,7 +40,7 @@ import {RetirementAccount} from "./Retirement";
 
 // -------------------------------------------------------------------------
 
-// let mySavings = new SavingsAccount("Bryson L. Smith", 10/19/1985);
+let mySavings = new SavingsAccount("Bryson L. Smith", 10/19/1985);
 // //
 // // console.log(
 // //     '$' + mySavings.balance + '\n'
@@ -84,10 +84,10 @@ import {RetirementAccount} from "./Retirement";
 //
 // mySavings.showBalance(); // 10016.67
 
-// mySavings.advanceDate(30);
+mySavings.advanceDate(30);
 // console.log(mySavings.date); // April 28, 2018
 //
-// mySavings.showBalance(); // 9916.50
+mySavings.showBalance(); // 9916.50
 //
 // mySavings.depositMoney(2500, "", 2); // 12416.50
 //
@@ -103,7 +103,7 @@ import {RetirementAccount} from "./Retirement";
 
 // -------------------------------------------------------------------------
 
-let myRetirement = new RetirementAccount('Bryson Smith', "November 3, 1952"); // @ retirement age
+let myRetirement = new RetirementAccount('Bryson Smith', new Date(1985, 9, 19)); // @  retirement age
 
 myRetirement.withdrawMoney(150000, 'Rental Property', 3); // FAIL
 
@@ -120,7 +120,11 @@ myRetirement.advanceDate(30); // 88806.82
 myRetirement.showBalance();
 
 for(let i = 0; i < 8; i++) {
-    myRetirement.withdrawMoney(1000, "TEST", 2); // FAIL 3x
+    myRetirement.withdrawMoney(1000, "TEST", 2); // FAIL 2x
 }
 
-console.log(myRetirement.accountHistory); // 10x Xactions
+myRetirement.advanceDate(730); // 87920.73
+
+myRetirement.showBalance();
+
+// console.log(myRetirement.accountHistory); // 11x Xactions

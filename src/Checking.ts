@@ -16,8 +16,8 @@ export class CheckingAccount implements Account {
     accountType: AccountType;
     interestRate: number;
     date: Date;
-    startDate: Date;
     dateOpened: Date;
+    lastAdvanceDate: Date;
     transaction: Transaction;
 
     constructor(accountHolder, birthDate) {
@@ -28,7 +28,7 @@ export class CheckingAccount implements Account {
         this.accountType = 1;
         this.interestRate = 0.01;
         this.date = new Date();
-        this.startDate = new Date();
+        this.lastAdvanceDate = new Date();
         this.dateOpened = new Date();
         this.transaction = <Transaction>{ };
     }
@@ -108,20 +108,22 @@ export class CheckingAccount implements Account {
     advanceDate(numberOfDays: number): void {
         this.date = new Date(this.date.setDate(this.date.getDate() + numberOfDays));
         this.accrueInterest();
-        // this.startDate = new Date(this.date.toString());
+        this.lastAdvanceDate = new Date(this.date.setDate(this.date.getDate()));
     }
 
     calcInterest(): number {
-        return (this.interestRate / 12) * this.balance;
+        // return (this.interestRate / 12) * this.balance;
+        return Math.round(100 * (this.interestRate * this.balance / 12)) / 100;
+
     }
 
     accrueInterest(): void {
 
-            for(let i = 0; i < this.compareMonths(this.dateOpened); i++) {
+            for(let i = 0; i < this.compareMonths(this.lastAdvanceDate); i++) {
                 this.balance += this.calcInterest();
             }
 
-            this.balance = Math.round(100 * this.balance) / 100;
+        this.balance = Math.round(100 * this.balance) / 100;
         };
 
     compareMonths(date: Date): number {
