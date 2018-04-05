@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Checking_1 = require("./Checking");
+var Savings_1 = require("./Savings");
 var Retirement_1 = require("./Retirement");
-// let myChecking = new CheckingAccount("Bryson L. Smith", "October 19, 1985");
+var myChecking = new Checking_1.CheckingAccount("Bryson L. Smith", "October 19, 1985");
 // console.log(myChecking.balance);
 // console.log(myChecking.date);
 // console.log(myChecking.startDate);
@@ -10,8 +12,8 @@ var Retirement_1 = require("./Retirement");
 // myChecking.advanceDate(30);
 // console.log(myChecking.balance);
 //
-// myChecking.advanceDate(365);
-// console.log(myChecking.balance);
+myChecking.advanceDate(365);
+console.log(myChecking.balance);
 //
 // myChecking.depositMoney(350, "San Diego Vacation Fund", 2);
 // // console.log(myChecking.balance);
@@ -35,7 +37,7 @@ var Retirement_1 = require("./Retirement");
 // }
 // console.log(myChecking.accountHistory);
 // -------------------------------------------------------------------------
-// let mySavings = new SavingsAccount("Bryson L. Smith", 10/19/1985);
+var mySavings = new Savings_1.SavingsAccount("Bryson L. Smith", 10 / 19 / 1985);
 // //
 // // console.log(
 // //     '$' + mySavings.balance + '\n'
@@ -75,10 +77,10 @@ var Retirement_1 = require("./Retirement");
 // console.log(mySavings.date); // April 4, 2018
 //
 // mySavings.showBalance(); // 10016.67
-// mySavings.advanceDate(30);
+mySavings.advanceDate(30);
 // console.log(mySavings.date); // April 28, 2018
 //
-// mySavings.showBalance(); // 9916.50
+mySavings.showBalance(); // 9916.50
 //
 // mySavings.depositMoney(2500, "", 2); // 12416.50
 //
@@ -104,5 +106,5 @@ for (var i = 0; i < 8; i++) {
 }
 myRetirement.advanceDate(730); // 87920.73
 myRetirement.showBalance();
-console.log(myRetirement.accountHistory); // 11x Xactions
+// console.log(myRetirement.accountHistory); // 11x Xactions
 //# sourceMappingURL=BankApp.js.map

@@ -96,7 +96,8 @@ var CheckingAccount = /** @class */ (function () {
         this.lastAdvanceDate = new Date(this.date.setDate(this.date.getDate()));
     };
     CheckingAccount.prototype.calcInterest = function () {
-        return (this.interestRate / 12) * this.balance;
+        // return (this.interestRate / 12) * this.balance;
+        return Math.round(100 * (this.interestRate * this.balance / 12)) / 100;
     };
     CheckingAccount.prototype.accrueInterest = function () {
         for (var i = 0; i < this.compareMonths(this.lastAdvanceDate); i++) {

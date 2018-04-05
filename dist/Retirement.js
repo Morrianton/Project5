@@ -18,7 +18,7 @@ var RetirementAccount = /** @class */ (function () {
     }
     RetirementAccount.prototype.withdrawMoney = function (amount, description, transactionOrigin) {
         var message;
-        if (this.compareYears(this.accountHolderBirthDate) >= 65) {
+        if (this.compareYears(this.accountHolderBirthDate) >= 60) {
             if (transactionOrigin !== TransactionOrigin_1.TransactionOrigin.branch) {
                 if (this.withdrawalLimit < 6) {
                     if (this.accountHistory.length >= 1) {
